@@ -1,1 +1,0 @@
-# Yuya-Hosoda.github.io
