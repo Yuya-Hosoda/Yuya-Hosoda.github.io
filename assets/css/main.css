@@ -2639,3 +2639,103 @@ figure img {
 .paragraph {
 	text-indent: 1em;
 }
+
+.research-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* カード間の余白 */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.research-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.research-card:hover {
+    transform: scale(1.02);
+}
+
+.research-card h3 {
+    color: #003399;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.research-card p {
+    color: #000000;
+    font-size: 1.0em;
+    margin-bottom: 10px;
+}
+
+.research-images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 画像を2×2のグリッドで配置 */
+    gap: 10px; /* 画像間の余白 */
+}
+
+.research-images img {
+    width: 100%; /* 画像の幅を均等にする */
+    height: auto;
+    border-radius: 5px;
+}
+
+/* 画面が小さい場合、画像を2列×2行にする */
+@media (max-width: 800px) {
+    .research-images {
+        grid-template-columns: repeat(1, 1fr); /* 2×2レイアウトに変更 */
+    }
+}
+
+.research-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* カードの上下にも少し余白を追加 */
+}
+
+.research-card p {
+    color: #000000;
+    font-size: 1.0em;
+    margin-bottom: 10px; /* 段落間に余白を追加 */
+}
+
+
+.text-section {
+    width: 65%; /* テキストの幅を指定 */
+}
+
+.image-section {
+    width: 30%; /* 画像の幅を指定 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-section img {
+    max-width: 100%; /* 画像が親要素に収まるようにする */
+    height: auto;
+    border-radius: 5px; /* 画像の角を丸くする */
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.content-wrapper p {
+    margin-bottom: 10px;
+    color: #555;
+    width: 65%; /* テキスト部分の幅を調整 */
+}
+
+.content-wrapper img {
+    width: 30%; /* 画像の幅を調整 */
+    margin-left: 20px; /* 画像とテキストの間に余白を追加 */
+}
