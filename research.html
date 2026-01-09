@@ -370,54 +370,49 @@
         ga('send', 'pageview');
     </script>
 
-    <!-- Research Card Image Hover Script -->
+    <!-- Research Card Image Click Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.research-card[data-image]');
             const overlay = document.getElementById('image-overlay');
             const overlayImage = document.getElementById('overlay-image');
-            let hoverTimeout = null;
             let isOverlayVisible = false;
 
             cards.forEach(card => {
-                card.addEventListener('mouseenter', function(e) {
+                card.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     const imagePath = this.getAttribute('data-image');
 
-                    // 既存のタイムアウトをクリア
-                    if (hoverTimeout) {
-                        clearTimeout(hoverTimeout);
-                    }
-
-                    // 200msの遅延を設けてちらつきを防止
-                    hoverTimeout = setTimeout(() => {
-                        if (imagePath) {
+                    if (imagePath) {
+                        if (isOverlayVisible) {
+                            // 既に表示されている場合は閉じる
+                            overlay.style.display = 'none';
+                            overlayImage.src = '';
+                            isOverlayVisible = false;
+                        } else {
+                            // 画像を表示
                             overlayImage.src = imagePath;
                             overlay.style.display = 'flex';
                             isOverlayVisible = true;
                         }
-                    }, 200);
-                });
-
-                card.addEventListener('mouseleave', function() {
-                    // タイムアウトをクリアして、不要な表示を防ぐ
-                    if (hoverTimeout) {
-                        clearTimeout(hoverTimeout);
-                    }
-
-                    // 即座に非表示
-                    if (isOverlayVisible) {
-                        overlay.style.display = 'none';
-                        overlayImage.src = '';
-                        isOverlayVisible = false;
                     }
                 });
             });
 
-            // オーバーレイ自体をクリックしても閉じる
+            // オーバーレイをクリックしたら閉じる
             overlay.addEventListener('click', function() {
                 this.style.display = 'none';
                 overlayImage.src = '';
                 isOverlayVisible = false;
+            });
+
+            // Escキーでも閉じる
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isOverlayVisible) {
+                    overlay.style.display = 'none';
+                    overlayImage.src = '';
+                    isOverlayVisible = false;
+                }
             });
         });
     </script>
