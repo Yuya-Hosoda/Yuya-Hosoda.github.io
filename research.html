@@ -376,19 +376,40 @@
             const cards = document.querySelectorAll('.research-card[data-image]');
             const overlay = document.getElementById('image-overlay');
             const overlayImage = document.getElementById('overlay-image');
+            let hoverTimeout = null;
+            let isOverlayVisible = false;
 
             cards.forEach(card => {
                 card.addEventListener('mouseenter', function(e) {
                     const imagePath = this.getAttribute('data-image');
-                    if (imagePath) {
-                        overlayImage.src = imagePath;
-                        overlay.style.display = 'flex';
+
+                    // 既存のタイムアウトをクリア
+                    if (hoverTimeout) {
+                        clearTimeout(hoverTimeout);
                     }
+
+                    // 200msの遅延を設けてちらつきを防止
+                    hoverTimeout = setTimeout(() => {
+                        if (imagePath) {
+                            overlayImage.src = imagePath;
+                            overlay.style.display = 'flex';
+                            isOverlayVisible = true;
+                        }
+                    }, 200);
                 });
 
                 card.addEventListener('mouseleave', function() {
-                    overlay.style.display = 'none';
-                    overlayImage.src = '';
+                    // タイムアウトをクリアして、不要な表示を防ぐ
+                    if (hoverTimeout) {
+                        clearTimeout(hoverTimeout);
+                    }
+
+                    // 即座に非表示
+                    if (isOverlayVisible) {
+                        overlay.style.display = 'none';
+                        overlayImage.src = '';
+                        isOverlayVisible = false;
+                    }
                 });
             });
 
@@ -396,6 +417,7 @@
             overlay.addEventListener('click', function() {
                 this.style.display = 'none';
                 overlayImage.src = '';
+                isOverlayVisible = false;
             });
         });
     </script>
