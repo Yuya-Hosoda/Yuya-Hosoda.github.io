@@ -2640,31 +2640,160 @@ figure img {
 	text-indent: 1em;
 }
 
-.research-grid {
+/* ニュースリストスタイル */
+.news-list {
     display: flex;
     flex-direction: column;
-    gap: 30px; /* カード間の余白 */
+    gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.research-card {
-    background-color: white;
-    border: 1px solid #ddd;
+.news-item {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-left: 4px solid #4a90e2;
+    padding: 20px 24px;
     border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.news-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 16px rgba(74, 144, 226, 0.12);
+}
+
+.news-date {
+    color: #4a90e2;
+    font-weight: 600;
+    font-size: 0.95em;
+    margin-bottom: 8px;
+}
+
+.news-content {
+    color: #546e7a;
+    font-size: 0.95em;
+    line-height: 1.7;
+}
+
+/* 画像オーバーレイスタイル */
+.image-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.image-overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* 研究カードグリッド */
+.research-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* 研究カード本体 */
+.research-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid #e0e6ed;
+    border-radius: 12px;
+    padding: 28px 32px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.research-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #4a90e2 0%, #7b68ee 100%);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.research-card:hover::before {
+    transform: scaleY(1);
 }
 
 .research-card:hover {
-    transform: scale(1.02);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(74, 144, 226, 0.15);
+    border-color: #4a90e2;
 }
 
+/* 研究タイトル */
 .research-card h3 {
-    color: #003399;
-    font-size: 1.5em;
-    margin-bottom: 10px;
+    color: #2c3e50;
+    font-size: 1.35em;
+    font-weight: 600;
+    margin-bottom: 14px;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+.research-card:hover h3 {
+    color: #4a90e2;
+}
+
+/* 研究者名 */
+.research-card .researcher-name {
+    color: #546e7a;
+    font-size: 1.0em;
+    font-weight: 500;
+    margin-bottom: 12px;
+    padding-left: 0;
+}
+
+/* 発表情報 */
+.research-card .publication-info {
+    color: #607d8b;
+    font-size: 0.9em;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    background-color: rgba(74, 144, 226, 0.05);
+    border-radius: 6px;
+    border-left: 3px solid #4a90e2;
+}
+
+/* 受賞情報 */
+.research-card .award-info {
+    color: #d4af37;
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background-color: rgba(212, 175, 55, 0.08);
+    border-radius: 6px;
+    border-left: 3px solid #d4af37;
 }
 
 .research-card p {
@@ -2689,6 +2818,65 @@ figure img {
 @media (max-width: 800px) {
     .research-images {
         grid-template-columns: repeat(1, 1fr); /* 2×2レイアウトに変更 */
+    }
+}
+
+/* レスポンシブデザイン: モバイル対応 */
+@media screen and (max-width: 960px) {
+    .research-card {
+        padding: 20px 24px;
+    }
+
+    .research-card h3 {
+        font-size: 1.2em;
+    }
+
+    .news-item {
+        padding: 16px 20px;
+    }
+
+    .image-overlay img {
+        max-width: 95%;
+        max-height: 95%;
+    }
+}
+
+@media screen and (max-width: 736px) {
+    .research-card {
+        padding: 16px 20px;
+        border-radius: 8px;
+    }
+
+    .research-card h3 {
+        font-size: 1.1em;
+        margin-bottom: 10px;
+    }
+
+    .research-card .researcher-name {
+        font-size: 0.95em;
+    }
+
+    .research-card .publication-info,
+    .research-card .award-info {
+        font-size: 0.85em;
+        padding: 6px 10px;
+    }
+
+    .news-item {
+        padding: 14px 16px;
+    }
+
+    .news-date {
+        font-size: 0.9em;
+    }
+
+    .news-content {
+        font-size: 0.9em;
+    }
+
+    .image-overlay img {
+        max-width: 98%;
+        max-height: 98%;
     }
 }
 
